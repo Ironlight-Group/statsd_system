@@ -1,6 +1,7 @@
 
 build:
-	gox -os="linux darwin" -arch=amd64
+	go mod tidy	
+	GOOS=linux GOARCH=amd64 go build .
 
 clean:
 	git clean -fd
