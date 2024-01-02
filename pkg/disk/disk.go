@@ -51,6 +51,10 @@ func (d *Disk) paths() ([]string, error) {
 
 	paths := []string{}
 	for _, mount := range mounts {
+		if mount.VfsType == "swap" {
+			log.Info("paths: skipping %s %s", mount.File, mount.VfsType)
+			continue
+		}
 		paths = append(paths, mount.File)
 	}
 
