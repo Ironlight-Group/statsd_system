@@ -8,15 +8,15 @@
 ```
 
   Usage:
-    system-stats
+    statsd_system
       [--statsd-address addr]
       [--memory-interval i]
       [--disk-interval i]
       [--cpu-interval i]
       [--extended]
       [--name name]
-    system-stats -h | --help
-    system-stats --version
+    statsd_system -h | --help
+    statsd_system --version
 
   Options:
     --statsd-address addr   statsd address [default: :8125]
@@ -32,32 +32,28 @@
 
 ## Installation
 
- Via go-get:
+ check it out and run `make`
 
-```
-$ go get github.com/statsd/system
-```
-
- Via binaries:
+ Or just use the binary, it's checked in as statsd_system
 
 Coming soon!
 
 ## Metrics
 
- Metrics are prefixed with the hostname (or `--name`), and
+ Metrics are postfixed with the hostname (or `--name`), and
  namespaced by the resource, for example:
 
 ```
-api-2.cpu.blocked:7|c
-api-2.cpu.running:4|c
-api-2.cpu.interrupts:19695796035|c
-api-2.cpu.percent:26|g
-api-2.cpu.switches:25195265352|c
-api-2.cpu.processes:20027|c
-api-2.cpu.blocked:7|c
-api-2.cpu.running:4|c
-api-2.cpu.interrupts:19695796035|c
-api-2.cpu.percent:26|g
+cpu.blocked.api-2:7|c
+cpu.running.api-2:4|c
+cpu.interrupts.api-2:19695796035|c
+cpu.percent.api-2:26|g
+cpu.switches.api-2:25195265352|c
+cpu.processes.api-2:20027|c
+cpu.blocked.api-2:7|c
+cpu.running.api-2:4|c
+cpu.interrupts.api-2:19695796035|c
+cpu.percent.api-2:26|g
 ...
 ```
 
@@ -105,19 +101,7 @@ api-2.cpu.percent:26|g
 ## Daemonization
 
  system-stats(1) doesn't support running as a daemon natively, you'll
- want to use upstart or similar for this. Add the following example
- upstart script to /etc/init/system-stats.conf:
-
-```
-respawn
-
-start on runlevel [2345]
-stop on runlevel [016]
-
-exec system-stats --statsd-address 10.0.0.214:5000
-```
-
- Then run `sudo start system-stats` and you're good to go!
+ want to use systemd or similar for this.
 
 ## Debugging
 
