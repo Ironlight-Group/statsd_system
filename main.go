@@ -4,7 +4,7 @@ import "github.com/Ironlight-Group/statsd_system/pkg/collector"
 import "github.com/Ironlight-Group/statsd_system/pkg/memory"
 import "github.com/Ironlight-Group/statsd_system/pkg/disk"
 import "github.com/Ironlight-Group/statsd_system/pkg/cpu"
-import "github.com/statsd/client-namespace"
+import "github.com/Ironlight-Group/statsd_system/pkg/postfix_namespace"
 import . "github.com/tj/go-gracefully"
 import "github.com/segmentio/go-log"
 import "github.com/statsd/client"
@@ -55,7 +55,7 @@ func main() {
 		name = host
 	}
 
-	c := collector.New(namespace.New(client, name))
+	c := collector.New(postfix_namespace.New(client, name))
 	c.Add(memory.New(interval(args, "--memory-interval"), extended))
 	c.Add(cpu.New(interval(args, "--cpu-interval"), extended))
 	c.Add(disk.New(interval(args, "--disk-interval")))

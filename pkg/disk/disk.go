@@ -85,9 +85,9 @@ func (d *Disk) Report() {
 					continue
 				}
 
-				d.client.Gauge(path+".percent", int(percent(stat.Used, stat.All)))
-				d.client.Gauge(path+".free", int(stat.Free))
-				d.client.Gauge(path+".used", int(stat.Used))
+				d.client.Gauge("percent."+path, int(percent(stat.Used, stat.All)))
+				d.client.Gauge("free."+path, int(stat.Free))
+				d.client.Gauge("used."+path, int(stat.Used))
 			}
 
 		case <-d.exit:
